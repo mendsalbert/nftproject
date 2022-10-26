@@ -51,11 +51,7 @@ const hero = () => {
                 alt=""
                 className="hero-img mt-8 inline-block w-72 rotate-[8deg] sm:w-full lg:w-[24rem] xl:w-[35rem]"
               />
-              {/* <img
-                src="/images/land.jpeg"
-                alt=""
-                className="animate-fly absolute top-0 md:-right-[10%]"
-              /> */}
+              
             </div>
           </div>
         </div>
