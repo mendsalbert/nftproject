@@ -98,18 +98,11 @@ const BidsCarousel = ({ nft }) => {
                         price?.toString() || 0
                       )
                     ) || 0
-                  ).toFixed(3) || 0}{" "} ETH,
+                  ).toFixed(3) || 0}{" "} ETH
                       </span>
                     </span>
                   </div>
-                  <div className="mt-2 text-sm">
-                    <span className="dark:text-jacarta-300 text-jacarta-500">
-                      Current Bid
-                    </span>
-                    <span className="dark:text-jacarta-100 text-jacarta-700">
-                      {/* {bid_number} ETH */}
-                    </span>
-                  </div>
+                 
 
                   <div className="mt-8 flex items-center justify-between">
                     <button
