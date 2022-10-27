@@ -2,8 +2,8 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Feature_collections_data from "../../data/Feature_collections_data";
-
-const Explore_collection_item = ({ itemFor }) => {
+import ether from 'ethers'
+const Explore_collection_item = ({ itemFor , nft}) => {
   const { sortedCollectionData } = useSelector((state) => state.counter);
 
   const [itemData, setItemData] = useState([]);
