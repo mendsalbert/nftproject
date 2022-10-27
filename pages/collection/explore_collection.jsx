@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { tranding_category_filter } from "../../data/categories_data";
 import Link from "next/link";
 import { HeadLine } from "../../components/component";
@@ -10,6 +10,7 @@ import Head from "next/head";
 import Meta from "../../components/Meta";
 import { collectCollectionData } from "../../redux/counterSlice";
 import { useDispatch } from "react-redux";
+import { AuthContext } from "../../utils/AuthProvider";
 
 const Explore_collection = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,17 @@ const Explore_collection = () => {
     dispatch(collectCollectionData(collectionFilteredData.slice(0, 8)));
   }, [dispatch, collectionFilteredData]);
 
+  const { address, signer, contract, provider, chainId, connect } =
+  useContext(AuthContext);
+
+const [nfts, setnft] = useState([]);
+async function loadNFTS() {
+  const nft = await signer?.fetchMarketItems();
+  setnft(nft);
+}
+useEffect(() => {
+  loadNFTS();
+}, [signer]);
   return (
     <>
       <Meta title="Explore Collection || Xhibiter | NFT Marketplace Next.js Template" />
@@ -76,45 +88,16 @@ const Explore_collection = () => {
                     </li>
                   );
                 } else {
-                  return (
-                    <li
-                      className="my-1 mr-2.5"
-                      key={id}
-                      onClick={() => {
-                        handleItemFilter(text);
-                        setFilterVal(id);
-                      }}
-                    >
-                      <button
-                        className={
-                          filterVal === id
-                            ? "dark:border-jacarta-600 bg-accent group border-jacarta-100 font-display flex h-9 items-center rounded-lg border px-4 text-sm font-semibold transition-colors border-transparent dark:border-transparent text-white"
-                            : "dark:border-jacarta-600 dark:bg-jacarta-900 dark:hover:bg-accent group hover:bg-accent border-jacarta-100 font-display text-jacarta-500 flex h-9 items-center rounded-lg border bg-white px-4 text-sm font-semibold transition-colors hover:border-transparent hover:text-white dark:text-white dark:hover:border-transparent dark:hover:text-white"
-                        }
-                      >
-                        <svg
-                          className={
-                            filterVal === id
-                              ? "icon mr-1 h-4 w-4 transition-colors fill-white"
-                              : "icon fill-jacarta-700 dark:fill-jacarta-100 mr-1 h-4 w-4 transition-colors group-hover:fill-white"
-                          }
-                        >
-                          <use xlinkHref={`/icons.svg#icon-${svg}`}></use>
-                        </svg>
-                        <span>{text}</span>
-                      </button>
-                    </li>
-                  );
+                 
                 }
               })}
             </ul>
             {/* dropdown */}
-            <Collection_dropdown />
           </div>
 
           {/* <!-- Grid --> */}
           <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-3 lg:grid-cols-4">
-            <Explore_collection_item itemFor="explore-collection" />
+            <Explore_collection_item nft={nfts} itemFor="explore-collection" />
           </div>
         </div>
       </section>

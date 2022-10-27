@@ -331,55 +331,14 @@ const MblNavbar = ({ theme }) => {
                   ? "dropdown-toggle font-display hover:text-accent focus:text-accent flex items-center justify-between py-3.5 text-base text-jacarta-700 dark:lg:text-jacarta-700 lg:text-white lg:px-5 w-full"
                   : "dropdown-toggle text-jacarta-700 font-display hover:text-accent focus:text-accent dark:hover:text-accent dark:focus:text-accent flex items-center justify-between py-3.5 text-base dark:text-white lg:px-5 w-full"
               }
-              onClick={(e) => handleItemDropdown(e)}
+              // onClick={(e) => handleItemDropdown(e)}
             >
+              <Link href={'/'}>
               <span className={navText === "home" ? "text-accent" : ""}>
                 Home
               </span>
-
-              <i className="lg:hidden">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  className="h-4 w-4 dark:fill-white"
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
-                </svg>
-              </i>
+              </Link>
             </button>
-
-            <ul className="dropdown-menu dark:bg-jacarta-800 left-0 top-[85%] z-10 hidden min-w-[200px] gap-x-4 whitespace-nowrap rounded-xl bg-white transition-all will-change-transform group-hover:visible group-hover:opacity-100 lg:invisible lg:absolute lg:grid lg:translate-y-4 lg:py-4 lg:px-2 lg:opacity-0 lg:shadow-2xl lg:group-hover:translate-y-2 relative">
-              {homenavData.map(({ id, text, url }) => {
-                return (
-                  <li key={id}>
-                    <Link href={url}>
-                      <a
-                        className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center rounded-xl px-5 py-2 transition-colors"
-                        onClick={() => {
-                          // setHomeNavValue(id);
-                          // setNavItemValue(id);
-                          dispatch(closeMblMenu());
-                          localStorage.setItem("navItemValue", id);
-                        }}
-                      >
-                        <span
-                          className={
-                            navItemValue === id
-                              ? "font-display text-accent text-sm"
-                              : "font-display text-jacarta-700 text-sm dark:text-white"
-                          }
-                        >
-                          {text}
-                        </span>
-                      </a>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
           </li>
           <li className="js-nav-dropdown group relative">
             <button
@@ -388,52 +347,18 @@ const MblNavbar = ({ theme }) => {
                   ? "dropdown-toggle font-display  hover:text-accent focus:text-accent flex items-center justify-between py-3.5 text-base lg:text-white text-jacarta-700 dark:text-white lg:px-5 w-full"
                   : "dropdown-toggle text-jacarta-700 font-display hover:text-accent focus:text-accent dark:hover:text-accent dark:focus:text-accent flex items-center justify-between py-3.5 text-base dark:text-white lg:px-5 w-full"
               }
-              onClick={(e) => handleItemDropdown(e)}
+              // onClick={(e) => handleItemDropdown(e)}
             >
+              
               <span className={navText === "pages" ? "text-accent" : ""}>
+                <Link href='/collection/explore_collection'>
                 Explorer
+                </Link>
               </span>
 
-              <i className="lg:hidden">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  className="h-4 w-4 dark:fill-white"
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M12 13.172l4.95-4.95 1.414 1.414L12 16 5.636 9.636 7.05 8.222z"></path>
-                </svg>
-              </i>
+            
             </button>
-            <ul className="dropdown-menu dark:bg-jacarta-800 left-0 top-[85%] z-10 hidden min-w-[200px] gap-x-4 whitespace-nowrap rounded-xl bg-white transition-all will-change-transform group-hover:visible group-hover:opacity-100 lg:invisible lg:absolute lg:grid lg:translate-y-4 lg:py-4 lg:px-2 lg:opacity-0 lg:shadow-2xl lg:group-hover:translate-y-2 relative">
-              {pageTextData.map(({ id, text, href }) => {
-                return (
-                  <li key={id}>
-                    <Link href={href}>
-                      <a
-                        className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center rounded-xl px-5 py-2 transition-colors"
-                        onClick={() => {
-                          setNavItemValue(id);
-                          localStorage.setItem("navItemValue", id);
-                        }}
-                      >
-                        <span
-                          className={
-                            navItemValue === id
-                              ? "font-display text-accent text-sm"
-                              : "font-display text-jacarta-700 text-sm dark:text-white"
-                          }
-                        >
-                          {text}
-                        </span>
-                      </a>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
+           
           </li>
       
           <li className="group">

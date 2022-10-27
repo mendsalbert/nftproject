@@ -7,8 +7,8 @@ import Likes from "../likes";
 import Auctions_dropdown from "../dropdown/Auctions_dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { buyModalShow } from "../../redux/counterSlice";
-import {ethers} from 'ethers'
-const CategoryItem = ({nft}) => {
+import { ethers } from "ethers";
+const CategoryItem = ({ nft }) => {
   const { sortedtrendingCategoryItemData } = useSelector(
     (state) => state.counter
   );
@@ -17,10 +17,9 @@ const CategoryItem = ({nft}) => {
   return (
     <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
       {nft?.map((item) => {
-        const {
-          tokenId, image, name, description, owner, price, seller
-        } = item;
-      
+        const { tokenId, image, name, description, owner, price, seller } =
+          item;
+
         return (
           <article key={tokenId?.toString()}>
             <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2.5xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg">
@@ -34,7 +33,6 @@ const CategoryItem = ({nft}) => {
                     />
                   </a>
                 </Link>
-
 
                 <div className="absolute left-3 -bottom-3">
                   <div className="flex -space-x-2">
@@ -74,19 +72,15 @@ const CategoryItem = ({nft}) => {
                 </Link>
 
                 {/* auction dropdown  */}
-                <Auctions_dropdown classes="dark:hover:bg-jacarta-600 dropup hover:bg-jacarta-100 rounded-full" />
               </div>
               <div className="mt-2 text-sm">
                 <span className="dark:text-jacarta-200 text-jacarta-700 mr-1">
-                {parseFloat(
-                    Number(
-                      ethers.utils.formatEther(
-                        price?.toString() || 0
-                      )
-                    ) || 0
-                  ).toFixed(3) || 0}{" "} ETH
+                  {parseFloat(
+                    Number(ethers.utils.formatEther(price?.toString() || 0)) ||
+                      0
+                  ).toFixed(3) || 0}{" "}
+                  ETH
                 </span>
-               
               </div>
 
               <div className="mt-8 flex items-center justify-between">
@@ -96,7 +90,6 @@ const CategoryItem = ({nft}) => {
                 >
                   Buy now
                 </button>
-               
               </div>
             </div>
           </article>
@@ -107,3 +100,4 @@ const CategoryItem = ({nft}) => {
 };
 
 export default CategoryItem;
+
