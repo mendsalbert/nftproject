@@ -12,7 +12,8 @@ import { donationAddress } from '../config';
 
 import axios from 'axios';
 import WalletLink from 'walletlink';
-import donationContract from '../artifacts/contracts/Donation.sol/Donation.json';
+import donationContract from '../artifacts/contracts/NFT.sol/NFT.json';
+
 import Web3Modal from 'web3modal';
 import { ellipseAddress, getChainData } from '../lib/utilities';
 

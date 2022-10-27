@@ -1,10 +1,98 @@
 import React, { useState, useEffect, useContext } from "react";
 import "tippy.js/dist/tippy.css"; // optional
-
+import { ethers } from "ethers";
+import { Badge, Button, Input, Modal, Textarea } from "@nextui-org/react";
+import { Collapse, Grid, Text, Progress } from "@nextui-org/react";
+import FileViewer from "react-file-viewer";
+import toast, { Toaster } from "react-hot-toast";
 import Meta from "../../components/Meta";
+import { AuthContext } from "../../utils/AuthProvider";
 
 const Create = () => {
- 
+  const { address, signer, contract, provider, chainId, connect } =
+  useContext(AuthContext);
+const projectId = "2DB3mQQJtzIC03GYarET8tFZJIm";
+const projectSecret = "0dedd8064ff788414096e72cc7e3f4a1";
+const auth =
+  "Basic " + Buffer.from(projectId + ":" + projectSecret).toString("base64");
+const ipfsClient = require("ipfs-http-client");
+console.log(auth);
+const ipfs = ipfsClient.create({
+  host: "ipfs.infura.io",
+  port: 5001,
+  protocol: "https",
+  apiPath: "/api/v0",
+  headers: {
+    authorization: auth,
+  },
+});
+
+  const [isloading, setisloading] = useState(false);
+  const [file, setFile] = useState("");
+  const [filetype, setfiletype] = useState("");
+  const [filesize, setfilesize] = useState("");
+  const [isfileuploading, setisfileuploading] = useState(false);
+  const [fileready, setfileready] = useState(false);
+
+  const onError = (err) => {
+    console.log("Error:", err); // Write your own logic
+  };
+
+  async function onChange(e) {
+    setisloading(true);
+    const file = e.target.files[0];
+
+    try {
+      const added = await ipfs.add(file, {
+        progress: (prog) => console.log(`received: ${prog}`),
+      });
+
+      const url = `https://infura-ipfs.io/ipfs/${added.path}`;
+      console.log(url);
+      setFile(url);
+      setisloading(false);
+      setfiletype(file.name);
+      setfilesize(file.size);
+      // setFileUrl(url);
+    } catch (error) {
+      console.log("Error uploading file: ", error);
+    }
+  }
+
+  function getExtension() {
+    return filetype.split(".").pop();
+  }
+
+  const onUploadFile = async () => {
+    setisfileuploading(true);
+    let transaction = await signer.createAlbum(
+      name,
+      file,
+      title,
+      description,
+      active == 2 ? true : false
+    );
+    let txReceipt = await transaction.wait();
+    const [transferEvent] = txReceipt.events;
+    console.log(transferEvent);
+    setisfileuploading(false);
+    setFile("");
+    setname("");
+    settitle("");
+    setdescription("");
+    setfileready(true);
+    setVisible(false);
+    notify("Album Created Successfully");
+  };
+
+  const notify = (msg) =>
+  toast.success(msg, {
+    style: {
+      borderRadius: "10px",
+      background: "#333",
+      color: "#fff",
+    },
+  });
   return (
     <div>
       <Meta title="Create || Xhibiter | NFT Marketplace Next.js Template" />
@@ -82,6 +170,84 @@ const Create = () => {
                 placeholder="Provide a detailed description of your item."
               ></textarea>
             </div>
+
+
+
+            <div class="max-w-full mb-6">
+            <label class="flex justify-center w-full h-32 px-4 transition bg-white dark:bg-[#13173f] border-2 border-gray-300 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none">
+              <span class="flex items-center space-x-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-6 h-6 text-gray-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
+                  />
+                </svg>
+                <span class="font-medium text-gray-600">
+                  Click here to select file
+                  {/* <span class="text-blue-600 underline">browse</span> */}
+                </span>
+              </span>
+              <input
+                type="file"
+                name="file_upload"
+                class="hidden"
+                onChange={onChange}
+              />
+            </label>
+          </div>
+
+          {file && (
+            <FileViewer
+              fileType={getExtension()}
+              filePath={file}
+              // errorComponent={CustomErrorComponent}
+              onError={onError}
+            />
+          )}
+
+          {isloading ? (
+            <div className="flex flex-row items-center justify-center">
+              <Progress
+                indeterminated
+                value={50}
+                color="secondary"
+                status="secondary"
+              />
+            </div>
+          ) : (
+            ""
+          )}
+
+          {file && (
+            <div>
+              <button
+                onClick={() => {
+                  onUploadFile();
+                }}
+                class="hover:shadow-form w-full rounded-md bg-blue-600 py-3 px-8 text-center text-base font-semibold text-white outline-none"
+              >
+                Save{" "}
+              </button>
+            </div>
+          )}
+          {isfileuploading ? (
+            <Progress
+              indeterminated
+              value={50}
+              color="primary"
+              status="primary"
+            />
+          ) : (
+            ""
+          )}
             {/* <!-- Submit --> */}
             <button
               disabled
