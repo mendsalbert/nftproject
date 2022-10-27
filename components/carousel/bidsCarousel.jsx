@@ -12,12 +12,15 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { bidsModalShow } from "../../redux/counterSlice";
 import { useDispatch } from "react-redux";
 import Likes from "../likes";
-
-const BidsCarousel = () => {
+import {ethers} from 'ethers'
+const BidsCarousel = ({ nft }) => {
   const dispatch = useDispatch();
+
   const handleclick = () => {
     console.log("clicked on ");
   };
+  console.log(nft?.length);
+
   return (
     <>
       <Swiper
@@ -45,26 +48,21 @@ const BidsCarousel = () => {
         }}
         className=" card-slider-4-columns !py-5"
       >
-        {bidsData.map((item) => {
-          const { id, image, title, bid_number, eth_number, react_number } =
+        {nft?.map((item) => {
+          const { tokenId, image, name, description, owner, price, seller } =
             item;
-          const itemLink = image
-            .split("/")
-            .slice(-1)
-            .toString()
-            .replace(".jpg", "");
           return (
-            <SwiperSlide className="text-white" key={id}>
+            <SwiperSlide className="text-white" key={tokenId?.toString()}>
               <article>
                 <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg text-jacarta-500">
                   <figure>
                     {/* {`item/${itemLink}`} */}
-                    <Link href={"/item/" + itemLink}>
+                    <Link href={"/item/" + tokenId?.toString()}>
                       <a>
                         <div className="w-full">
-                          <Image
-                            src={image}
-                            alt={title}
+                          <img
+                            src={image?.toString()}
+                            alt={name}
                             height={230}
                             width={230}
                             layout="responsive"
@@ -77,10 +75,10 @@ const BidsCarousel = () => {
                     </Link>
                   </figure>
                   <div className="mt-4 flex items-center justify-between">
-                    <Link href={"/item/" + itemLink}>
+                    <Link href={"/item/" + tokenId?.toString()}>
                       <a>
                         <span className="font-display text-jacarta-700 hover:text-accent text-base dark:text-white">
-                          {title}
+                          {name}
                         </span>
                       </a>
                     </Link>
@@ -94,7 +92,13 @@ const BidsCarousel = () => {
                       </Tippy>
 
                       <span className="text-green text-sm font-medium tracking-tight">
-                        {eth_number} ETH
+                        {parseFloat(
+                    Number(
+                      ethers.utils.formatEther(
+                        price?.toString() || 0
+                      )
+                    ) || 0
+                  ).toFixed(3) || 0}{" "} ETH,
                       </span>
                     </span>
                   </div>
@@ -103,7 +107,7 @@ const BidsCarousel = () => {
                       Current Bid
                     </span>
                     <span className="dark:text-jacarta-100 text-jacarta-700">
-                      {bid_number} ETH
+                      {/* {bid_number} ETH */}
                     </span>
                   </div>
 
@@ -115,11 +119,6 @@ const BidsCarousel = () => {
                     >
                       Place bid
                     </button>
-
-                    <Likes
-                      like={react_number}
-                      classes="flex items-center space-x-1"
-                    />
                   </div>
                 </div>
               </article>

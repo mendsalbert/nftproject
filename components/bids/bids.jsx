@@ -5,7 +5,8 @@ import { HeadLine } from '../component';
 import 'tippy.js/dist/tippy.css';
 import BidsCarousel from '../carousel/bidsCarousel';
 
-const Bids = ({ classes = 'pt-10 pb-24', bgWhite }) => {
+const Bids = ({ classes = 'pt-10 pb-24', bgWhite, nft }) => {
+	console.log(nft);
 	return (
 		<section className={classes}>
 			{/* <!-- Hot Bids --> */}
@@ -23,7 +24,7 @@ const Bids = ({ classes = 'pt-10 pb-24', bgWhite }) => {
 
 				<div className="relative">
 					{/* <!-- Slider --> */}
-					<BidsCarousel />
+					<BidsCarousel nft={nft} />
 				</div>
 			</div>
 			{/* <!-- end hot bids --> */}

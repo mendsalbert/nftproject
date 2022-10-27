@@ -23,12 +23,12 @@ const Home_1 = () => {
     loadNFTS();
   }, [signer]);
 
-  console.log(nfts);
+//   console.log(nfts);
   return (
     <main>
       <Meta title="Home 1 || Xhibiter | NFT Marketplace Next.js Template" />
       <Hero />
-      <Bids />
+      <Bids nft={nfts} />
       {/* <Top_collection /> */}
       <Tranding_category />
       {/* <NewseLatter /> */}
