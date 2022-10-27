@@ -6,7 +6,7 @@ import 'tippy.js/dist/tippy.css';
 import BidsCarousel from '../carousel/bidsCarousel';
 
 const Bids = ({ classes = 'pt-10 pb-24', bgWhite, nft }) => {
-	console.log(nft);
+	// console.log(nft);
 	return (
 		<section className={classes}>
 			{/* <!-- Hot Bids --> */}

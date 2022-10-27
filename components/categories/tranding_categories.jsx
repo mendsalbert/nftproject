@@ -4,7 +4,7 @@ import { trendingCategoryData } from '../../data/categories_data';
 import { HeadLine } from '../component';
 import Trending_categories_items from './trending_categories_items';
 
-const Tranding_category = () => {
+const Tranding_category = ({nft}) => {
 	return (
 		<section className="py-24">
 			<div className="container">
@@ -15,7 +15,7 @@ const Tranding_category = () => {
 				/>
 
 				{/* trending categories */}
-				<Trending_categories_items />
+				<Trending_categories_items nft={nft} />
 			</div>
 		</section>
 	);

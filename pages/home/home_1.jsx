@@ -30,7 +30,7 @@ const Home_1 = () => {
       <Hero />
       <Bids nft={nfts} />
       {/* <Top_collection /> */}
-      <Tranding_category />
+      <Tranding_category nft={nfts} />
       {/* <NewseLatter /> */}
     </main>
   );

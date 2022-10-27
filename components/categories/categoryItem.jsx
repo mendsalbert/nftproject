@@ -7,8 +7,8 @@ import Likes from "../likes";
 import Auctions_dropdown from "../dropdown/Auctions_dropdown";
 import { useDispatch, useSelector } from "react-redux";
 import { buyModalShow } from "../../redux/counterSlice";
-
-const CategoryItem = () => {
+import {ethers} from 'ethers'
+const CategoryItem = ({nft}) => {
   const { sortedtrendingCategoryItemData } = useSelector(
     (state) => state.counter
   );
@@ -16,43 +16,29 @@ const CategoryItem = () => {
 
   return (
     <div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-2 lg:grid-cols-4">
-      {sortedtrendingCategoryItemData.map((item) => {
+      {nft?.map((item) => {
         const {
-          id,
-          image,
-          title,
-          price,
-          bidLimit,
-          bidCount,
-          likes,
-          creator,
-          owner,
+          tokenId, image, name, description, owner, price, seller
         } = item;
-        const itemLink = image
-          .split("/")
-          .slice(-1)
-          .toString()
-          .replace(".jpg", "")
-          .replace(".gif", "");
+      
         return (
-          <article key={id}>
+          <article key={tokenId?.toString()}>
             <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2.5xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg">
               <figure className="relative">
-                <Link href={`/item/${itemLink}`}>
+                <Link href={`/item/${tokenId?.toString()}`}>
                   <a>
                     <img
-                      src={image}
+                      src={image?.toString()}
                       alt="item 5"
                       className="w-full h-[230px] rounded-[0.625rem] object-cover"
                     />
                   </a>
                 </Link>
 
-                <Likes like={likes} />
 
                 <div className="absolute left-3 -bottom-3">
                   <div className="flex -space-x-2">
-                    <Link href={`/item/${itemLink}`}>
+                    {/* <Link href={`/item/${itemLink}`}>
                       <a>
                         <Tippy content={<span>creator: {creator.name}</span>}>
                           <img
@@ -62,8 +48,8 @@ const CategoryItem = () => {
                           />
                         </Tippy>
                       </a>
-                    </Link>
-                    <Link href={`/item/${itemLink}`}>
+                    </Link> */}
+                    {/* <Link href={`/item/${tokenId?.toString()}`}>
                       <a>
                         <Tippy content={<span>creator: {owner.name}</span>}>
                           <img
@@ -74,15 +60,15 @@ const CategoryItem = () => {
                           />
                         </Tippy>
                       </a>
-                    </Link>
+                    </Link> */}
                   </div>
                 </div>
               </figure>
               <div className="mt-7 flex items-center justify-between">
-                <Link href={`/item/${itemLink}`}>
+                <Link href={`/item/${tokenId?.toString()}`}>
                   <a>
                     <span className="font-display text-jacarta-700 hover:text-accent text-base dark:text-white">
-                      {title}
+                      {name}
                     </span>
                   </a>
                 </Link>
@@ -92,11 +78,15 @@ const CategoryItem = () => {
               </div>
               <div className="mt-2 text-sm">
                 <span className="dark:text-jacarta-200 text-jacarta-700 mr-1">
-                  {price}
+                {parseFloat(
+                    Number(
+                      ethers.utils.formatEther(
+                        price?.toString() || 0
+                      )
+                    ) || 0
+                  ).toFixed(3) || 0}{" "} ETH
                 </span>
-                <span className="dark:text-jacarta-300 text-jacarta-500">
-                  {bidCount}/{bidLimit}
-                </span>
+               
               </div>
 
               <div className="mt-8 flex items-center justify-between">
@@ -106,16 +96,7 @@ const CategoryItem = () => {
                 >
                   Buy now
                 </button>
-                <Link href={`/item/${itemLink}`}>
-                  <a className="group flex items-center">
-                    <svg className="icon icon-history group-hover:fill-accent dark:fill-jacarta-200 fill-jacarta-500 mr-1 mb-[3px] h-4 w-4">
-                      <use xlinkHref="/icons.svg#icon-history"></use>
-                    </svg>
-                    <span className="group-hover:text-accent font-display dark:text-jacarta-200 text-sm font-semibold">
-                      View History
-                    </span>
-                  </a>
-                </Link>
+               
               </div>
             </div>
           </article>
