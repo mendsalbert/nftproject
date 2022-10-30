@@ -1,41 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext } from "react";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Activity_item from '../collectrions/Activity_item';
 import Image from 'next/image';
 import Feature_collections_data from '../../data/Feature_collections_data';
 import Trending_categories_items from '../categories/trending_categories_items';
-
 import 'react-tabs/style/react-tabs.css';
 import Explore_collection_item from '../collectrions/explore_collection_item';
+import { AuthContext } from '../../utils/AuthProvider';
 
 const User_items = () => {
+	const { address, signer, contract, provider, chainId, connect } =
+    useContext(AuthContext);
+const [dashboard, setdashboard] = useState([])
+  const [nfts, setnft] = useState([]);
+  async function loadNFTS() {
+    const nft = await signer?.fetchMyNFTs();
+    setnft(nft);
+	}
+	async function loadDashboard() {
+		const data = await signer?.fetchItemsListed();
+		setdashboard(data);
+		console.log("nft ----------", data);
+	  }
+  useEffect(() => {
+	  loadNFTS();
+	  loadDashboard()
+  }, [signer]);
+
+	
+ 
+
 	const [itemActive, setItemActive] = useState(1);
 	const tabItem = [
 		{
 			id: 1,
-			text: 'on sale',
+			text: 'My Asset',
 			icon: 'on-sale',
 		},
 		{
 			id: 2,
-			text: 'owned',
+			text: 'Sell Asset',
 			icon: 'owned',
 		},
 		{
 			id: 3,
-			text: 'created(20)',
+			text: 'Dashboard',
 			icon: 'created',
 		},
-		{
-			id: 4,
-			text: 'collections',
-			icon: 'listing',
-		},
-		{
-			id: 5,
-			text: 'Activity',
-			icon: 'activity',
-		},
+		
 	];
 	return (
 		<>
@@ -80,33 +92,20 @@ const User_items = () => {
 
 						<TabPanel>
 							<div>
-								{/* <!-- Filter --> */}
-								<Trending_categories_items />
+								<Trending_categories_items nft={nfts}  />
 							</div>
 						</TabPanel>
 						<TabPanel>
 							<div>
-								{/* <!-- Filter --> */}
-								<Trending_categories_items />
+								<Trending_categories_items nft={nfts} />
 							</div>
 						</TabPanel>
 						<TabPanel>
 							<div>
-								{/* <!-- Filter --> */}
-								<Trending_categories_items />
+								<Trending_categories_items nft={dashboard} />
 							</div>
 						</TabPanel>
-						<TabPanel>
-							{/* <!-- Grid --> */}
-							<div className="grid grid-cols-1 gap-[1.875rem] md:grid-cols-3 lg:grid-cols-4">
-								<Explore_collection_item itemFor="userPage" />
-							</div>
-						</TabPanel>
-						<TabPanel>
-							<div>
-								<Activity_item />
-							</div>
-						</TabPanel>
+						
 					</Tabs>
 				</div>
 			</section>

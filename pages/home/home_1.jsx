@@ -16,12 +16,12 @@ const Home_1 = () => {
 
   const [nfts, setnft] = useState([]);
   async function loadNFTS() {
-    const nft = await signer?.fetchMarketItems();
+    const nft = await contract?.fetchMarketItems();
     setnft(nft);
   }
   useEffect(() => {
     loadNFTS();
-  }, [signer]);
+  }, [contract]);
 
 //   console.log(nfts);
   return (

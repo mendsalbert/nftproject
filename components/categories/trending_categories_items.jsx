@@ -7,7 +7,8 @@ import Recently_added_dropdown from '../dropdown/recently_added_dropdown';
 import { useSelector, useDispatch } from 'react-redux';
 import { updateTrendingCategoryItemData } from '../../redux/counterSlice';
 
-const Trending_categories_items = ({nft}) => {
+const Trending_categories_items = ({ nft }) => {
+	console.log(nft);
 	const [itemdata, setItemdata] = useState(trendingCategoryData);
 	const dispatch = useDispatch();
 	const { trendingCategorySorText } = useSelector((state) => state.counter);

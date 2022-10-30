@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import Feature_collections_data from "../../data/Feature_collections_data";
-import ether from 'ethers'
+import {ethers} from 'ethers'
 const Explore_collection_item = ({ itemFor , nft}) => {
   const { sortedCollectionData } = useSelector((state) => state.counter);
 
