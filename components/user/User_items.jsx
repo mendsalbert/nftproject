@@ -92,17 +92,17 @@ const [dashboard, setdashboard] = useState([])
 
 						<TabPanel>
 							<div>
-								<Trending_categories_items nft={nfts}  />
+								<Trending_categories_items nft={nfts} itemActive={itemActive}  />
 							</div>
 						</TabPanel>
 						<TabPanel>
 							<div>
-								<Trending_categories_items nft={nfts} />
+								<Trending_categories_items nft={nfts} itemActive={itemActive} />
 							</div>
 						</TabPanel>
 						<TabPanel>
 							<div>
-								<Trending_categories_items nft={dashboard} />
+								<Trending_categories_items nft={dashboard}  itemActive={itemActive}/>
 							</div>
 						</TabPanel>
 						

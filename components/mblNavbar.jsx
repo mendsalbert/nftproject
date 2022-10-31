@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Link from "next/link";
 import { closeMblMenu } from "../redux/counterSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import UserId from "./userId";
 import { Metamask_comp_text, Metamask_comp_icon } from "./metamask/Metamask";
+import { AuthContext } from "../utils/AuthProvider";
+import { disconnect } from "process";
 
 const MblNavbar = ({ theme }) => {
   const { mblMenu } = useSelector((state) => state.counter);
@@ -13,7 +15,15 @@ const MblNavbar = ({ theme }) => {
   const router = useRouter();
   const [navItemValue, setNavItemValue] = useState(1);
   const [navText, setnavText] = useState("");
-
+  const {
+    address,
+    signer,
+    contract,
+    provider,
+    chainId,
+    connect,
+    web3Provider,
+  } = useContext(AuthContext);
   const handleItemDropdown = (e) => {
     const target = e.target.closest("li");
 
@@ -118,7 +128,7 @@ const MblNavbar = ({ theme }) => {
     } else if (navItemValue === 27) {
       setnavText("collection");
     }
-  }, [dispatch, navItemValue, router]);
+  }, [dispatch, navItemValue, router, web3Provider]);
   const homenavData = [
     {
       id: 1,
@@ -333,10 +343,10 @@ const MblNavbar = ({ theme }) => {
               }
               // onClick={(e) => handleItemDropdown(e)}
             >
-              <Link href={'/'}>
-              <span className={navText === "home" ? "text-accent" : ""}>
-                Home
-              </span>
+              <Link href={"/"}>
+                <span className={navText === "home" ? "text-accent" : ""}>
+                  Home
+                </span>
               </Link>
             </button>
           </li>
@@ -349,18 +359,12 @@ const MblNavbar = ({ theme }) => {
               }
               // onClick={(e) => handleItemDropdown(e)}
             >
-              
               <span className={navText === "pages" ? "text-accent" : ""}>
-                <Link href='/collection/explore_collection'>
-                Explorer
-                </Link>
+                <Link href="/collection/explore_collection">Explorer</Link>
               </span>
-
-            
             </button>
-           
           </li>
-      
+
           <li className="group">
             <Link href="/create">
               <a
@@ -471,8 +475,6 @@ const MblNavbar = ({ theme }) => {
       <div className="ml-8 hidden lg:flex xl:ml-12">
         {/* <!-- Wallet --> */}
 
-        <Metamask_comp_icon prop={router} />
-
         {/* <!-- Profile --> */}
         <div className="js-nav-dropdown group-dropdown relative">
           {router.asPath === "/home/home_3" ? (
@@ -522,21 +524,10 @@ const MblNavbar = ({ theme }) => {
           >
             <UserId
               classes="js-copy-clipboard font-display text-jacarta-700 my-4 flex select-none items-center whitespace-nowrap px-5 leading-none dark:text-white"
-              userId="0x7a86c0b064171007716bbd6af96676935799a63e"
+              userId={address}
               shortId={true}
             />
 
-            <div className="dark:border-jacarta-600 border-jacarta-100 mx-5 mb-6 rounded-lg border p-4">
-              <span className="dark:text-jacarta-200 text-sm font-medium tracking-tight">
-                Balance
-              </span>
-              <div className="flex items-center">
-                <svg className="icon icon-ETH -ml-1 mr-1 h-[1.125rem] w-[1.125rem]">
-                  <use xlinkHref="/icons.svg#icon-ETH"></use>
-                </svg>
-                <span className="text-green text-lg font-bold">10 ETH</span>
-              </div>
-            </div>
             <Link href="/user/avatar_6">
               <a className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
                 <svg
@@ -554,25 +545,8 @@ const MblNavbar = ({ theme }) => {
                 </span>
               </a>
             </Link>
-            <Link href="/profile/user_avatar">
-              <a className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  width="24"
-                  height="24"
-                  className="fill-jacarta-700 h-4 w-4 transition-colors dark:fill-white"
-                >
-                  <path fill="none" d="M0 0h24v24H0z"></path>
-                  <path d="M9.954 2.21a9.99 9.99 0 0 1 4.091-.002A3.993 3.993 0 0 0 16 5.07a3.993 3.993 0 0 0 3.457.261A9.99 9.99 0 0 1 21.5 8.876 3.993 3.993 0 0 0 20 12c0 1.264.586 2.391 1.502 3.124a10.043 10.043 0 0 1-2.046 3.543 3.993 3.993 0 0 0-3.456.261 3.993 3.993 0 0 0-1.954 2.86 9.99 9.99 0 0 1-4.091.004A3.993 3.993 0 0 0 8 18.927a3.993 3.993 0 0 0-3.457-.26A9.99 9.99 0 0 1 2.5 15.121 3.993 3.993 0 0 0 4 11.999a3.993 3.993 0 0 0-1.502-3.124 10.043 10.043 0 0 1 2.046-3.543A3.993 3.993 0 0 0 8 5.071a3.993 3.993 0 0 0 1.954-2.86zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path>
-                </svg>
-                <span className="font-display text-jacarta-700 mt-1 text-sm dark:text-white">
-                  Edit Profile
-                </span>
-              </a>
-            </Link>
-            <Link href="/login">
-              <a className="dark:hover:bg-jacarta-600 hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
+
+              <a className="dark:hover:bg-jacarta-600 cursor-pointer hover:text-accent focus:text-accent hover:bg-jacarta-50 flex items-center space-x-2 rounded-xl px-5 py-2 transition-colors">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -583,11 +557,27 @@ const MblNavbar = ({ theme }) => {
                   <path fill="none" d="M0 0h24v24H0z"></path>
                   <path d="M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zM7 11V8l-5 4 5 4v-3h8v-2H7z"></path>
                 </svg>
-                <span className="font-display text-jacarta-700 mt-1 text-sm dark:text-white">
-                  Sign out
-                </span>
+                {web3Provider ? (
+                  <span
+                    onClick={() => {
+                      connect();
+                    }}
+                    className="font-display text-jacarta-700 mt-1 text-sm dark:text-white"
+                  >
+                    connect{" "}
+                  </span>
+                ) : (
+                  <span
+                    onClick={() => {
+                      disconnect();
+                    }}
+                    className="font-display text-jacarta-700 mt-1 text-sm dark:text-white"
+                  >
+                    Disconnect{" "}
+                  </span>
+                )}
               </a>
-            </Link>
+            
           </div>
         </div>
 

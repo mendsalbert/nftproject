@@ -1,9 +1,5 @@
 {
   "/_app": "pages/_app.js",
   "/_document": "pages/_document.js",
-  "/_error": "pages/_error.js",
-  "/collection/explore_collection": "pages/collection/explore_collection.js",
-  "/": "pages/index.js",
-  "/user/[user]": "pages/user/[user].js",
-  "/create": "pages/create.js"
+  "/_error": "pages/_error.js"
 }
