@@ -3,7 +3,7 @@ import "tippy.js/dist/tippy.css"; // optional
 import { ethers } from "ethers";
 import { Badge, Button, Input, Modal, Textarea } from "@nextui-org/react";
 import { Collapse, Grid, Text, Progress } from "@nextui-org/react";
-import FileViewer from "react-file-viewer";
+// import FileViewer from "react-file-viewer";
 import toast, { Toaster } from "react-hot-toast";
 import Meta from "../../components/Meta";
 import { AuthContext } from "../../utils/AuthProvider";
@@ -242,14 +242,14 @@ const Create = () => {
               </label>
             </div>
 
-            {file && (
+            {/* {file && (
               <FileViewer
                 fileType={getExtension()}
                 filePath={file}
                 // errorComponent={CustomErrorComponent}
                 onError={onError}
               />
-            )}
+            )} */}
 
             {isloading ? (
               <div className="flex flex-row items-center justify-center">
