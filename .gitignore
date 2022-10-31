@@ -31,7 +31,6 @@ typechain-types
 secret.txt
 #Hardhat files
 cache
-artifacts
 
 
 node_modules
@@ -43,7 +42,7 @@ typechain-types
 
 #Hardhat files
 cache
-artifacts
+
 
 node_modules
 .env
@@ -54,5 +53,5 @@ typechain-types
 secret.txt
 #Hardhat files
 cache
-artifacts
+
 
