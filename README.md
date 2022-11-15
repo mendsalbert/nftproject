@@ -23,16 +23,15 @@
 
 # What it does
 
-Making use of blockchain technology, we present to you Movers, an property management platform that seeks simplify property management processes with blockchain. By doing so, we offer you an easy way to trade properties amongst users. And what we seek to achieve is to make the property management processes more transparent to end users.
+NFTs have been around for a while now, but their popularity has exploded in recent months. So what exactly are NFTs? And why are they so popular?
 
-There are about four (4) user types (that is buyer, seller, lender and approver) that is captured on the platform. Among the four (4) user types, a user can perform an activity on the platform by choosing the user type they represent and then proceed to provide to make the exchange of a property a smooth sail. The user is also to ensure that metamask is installed in their browser. Below are steps a user can undertake to perform an activity on the platform:
+NFTs, or non-fungible tokens, are digital assets that are unique and cannot be replicated. This makes them perfect for things like collectibles, art, and other digital items that have value because they are rare.
 
-- The buyer can view a property and once interested can proceed to buy the property.
-- The seller can approve the sale of the property to enable the process, if not, the bid amount will be returned to the buyer. The seller after all other process will finally approve the sale to release the property to the buyer and then receive the bid amount.
-- The inspector will approve inspection once everything is in order for the next process.
-- The lender finally approve and lend the property for the seller to finally approve the property.
+One of the reasons NFTs have become so popular is because they provide a way for artists and creators to monetize their work in a way that wasn't possible before. For example, an artist can create a digital painting and then sell it as an NFT. The buyer can then display the painting in their digital gallery or even resell it for a profit.
 
-All media are stored on IPFS.
+Another reason NFTs are gaining in popularity is because they're a way to invest in the future of the digital world. As more and more of our lives move online, it's likely that NFTs will become an important part of the digital economy. So by buying NFTs now, you're investing in the future of the digital world.
+
+If you're interested in buying NFTs, one of the best places to do so is Universo. Universo is an online NFT platform that restores the original and classic NFTs. With a simple interface, you can upload an NFT and start selling it directly on the market.
 
 # Built With
 
@@ -66,9 +65,9 @@ To run this project locally, follow these steps.
 1. Clone the project locally, change into the directory, and install the dependencies:
 
 ```
-git clone https://github.com/kwakyebrilliant/Movers
+git clone https://github.com/mendsalbert/nftproject
 
-cd Auditra2
+cd nftproject
 
 # install using NPM or Yarn
 npm install
@@ -103,37 +102,32 @@ The chain ID should be 80001. If you have a localhost rpc set up, you may need t
 To deploy to Polygon test or main networks, update the configurations located in **hardhat.config.js** to use a private key and, optionally, deploy to a private RPC like Infura.
 
 ```javascript
-// require("@nomicfoundation/hardhat-toolbox");
 /* hardhat.config.js */
 require("@nomiclabs/hardhat-waffle");
-const fs = require("fs");
-// const privateKey = fs.readFileSync("secret.txt").toString();
-const projectId = "8b7ba5517c414450a93ec7334975a7fe";
-const privatekey1 = "";
-const privatekey2 = "";
-const privatekey3 = "";
-const privatekey4 = "";
+require("hardhat-contract-sizer");
+const privateKey = "private key here";
+
+const projectId = "xxx";
+
 module.exports = {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
       chainId: 1337,
+      allowUnlimitedContractSize: true,
     },
 
-    mainet: {
-      url: `https://palm-mainnet.infura.io/v3/${projectId}`, // accounts: [privateKey],
-    },
     matic: {
-      url: "https://polygon-mumbai.g.alchemy.com/v2/2bGIFu-iEnl9RvAOTe1ddZI2gBnuYQGS",
-      accounts: [privatekey1, privatekey2, privatekey3, privatekey4],
+      url: "---matic url here---",
+      accounts: [privateKey],
     },
   },
   solidity: {
-    version: "0.8.17",
+    version: "0.8.9",
     settings: {
       optimizer: {
         enabled: true,
-        runs: 200,
+        runs: 1,
       },
     },
   },
@@ -154,5 +148,4 @@ Distributed under the MIT License.
 
 # Contact
 
-- Brilliant Kwakye - https://twitter.com/a_moah__
 - Mends Albert - https://twitter.com/mendalbert
