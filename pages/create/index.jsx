@@ -135,13 +135,13 @@ const Create = () => {
             Create
           </h1>
 
-          <button
+          {/* <button
             onClick={() => {
               connect();
             }}
           >
             connect
-          </button>
+          </button> */}
           <div className="mx-auto max-w-[48.125rem]">
             {/* <!-- File Upload --> */}
             <div className="mb-6"></div>

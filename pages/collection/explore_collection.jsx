@@ -38,12 +38,12 @@ const Explore_collection = () => {
 
 const [nfts, setnft] = useState([]);
 async function loadNFTS() {
-  const nft = await signer?.fetchMarketItems();
+  const nft = await contract?.fetchMarketItems();
   setnft(nft);
 }
 useEffect(() => {
   loadNFTS();
-}, [signer]);
+}, [contract]);
   return (
     <>
       <Meta title="Explore Collection || Xhibiter | NFT Marketplace Next.js Template" />

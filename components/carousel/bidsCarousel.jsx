@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination, Scrollbar } from "swiper";
 import "swiper/css";
@@ -12,15 +12,31 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { bidsModalShow } from "../../redux/counterSlice";
 import { useDispatch } from "react-redux";
 import Likes from "../likes";
-import {ethers} from 'ethers'
+import { ethers } from "ethers";
+import { HeadLine } from "../component";
+import { tranding_category_filter } from "../../data/categories_data";
+import Explore_collection_item from "../../components/collectrions/explore_collection_item";
+import { AuthContext } from "../../utils/AuthProvider";
+
 const BidsCarousel = ({ nft }) => {
   const dispatch = useDispatch();
 
   const handleclick = () => {
     console.log("clicked on ");
   };
-  console.log(nft?.length);
 
+  const { address, signer, contract, provider, chainId, connect } =
+    useContext(AuthContext);
+  const [filterVal, setFilterVal] = useState(0);
+
+  const [nfts, setnft] = useState([]);
+  async function loadNFTS() {
+    const nft = await contract?.fetchMarketItems();
+    setnft(nft);
+  }
+  useEffect(() => {
+    loadNFTS();
+  }, [contract]);
   return (
     <>
       <Swiper
@@ -53,68 +69,79 @@ const BidsCarousel = ({ nft }) => {
             item;
           return (
             <SwiperSlide className="text-white" key={tokenId?.toString()}>
-              <article>
-                <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg text-jacarta-500">
-                  <figure>
-                    {/* {`item/${itemLink}`} */}
-                    <Link href={"/item/" + tokenId?.toString()}>
+            
+            <article key={tokenId?.toString()}>
+            <div className="dark:bg-jacarta-700 dark:border-jacarta-700 border-jacarta-100 rounded-2.5xl block border bg-white p-[1.1875rem] transition-shadow hover:shadow-lg">
+              <figure className="relative">
+                <Link href={`/item/${tokenId?.toString()}`}>
+                  <a>
+                    <img
+                      src={image?.toString()}
+                      alt="item 5"
+                      className="w-full h-[230px] rounded-[0.625rem] object-cover"
+                    />
+                  </a>
+                </Link>
+
+                <div className="absolute left-3 -bottom-3">
+                  <div className="flex -space-x-2">
+                    {/* <Link href={`/item/${itemLink}`}>
                       <a>
-                        <div className="w-full">
+                        <Tippy content={<span>creator: {creator.name}</span>}>
                           <img
-                            src={image?.toString()}
-                            alt={name}
-                            height={230}
-                            width={230}
-                            layout="responsive"
-                            objectFit="cover"
-                            className="rounded-[0.625rem] w-full"
-                            loading="lazy"
+                            src={creator.image}
+                            alt="creator"
+                            className="dark:border-jacarta-600 hover:border-accent dark:hover:border-accent h-6 w-6 rounded-full border-2 border-white"
                           />
-                        </div>
+                        </Tippy>
                       </a>
-                    </Link>
-                  </figure>
-                  <div className="mt-4 flex items-center justify-between">
-                    <Link href={"/item/" + tokenId?.toString()}>
+                    </Link> */}
+                    {/* <Link href={`/item/${tokenId?.toString()}`}>
                       <a>
-                        <span className="font-display text-jacarta-700 hover:text-accent text-base dark:text-white">
-                          {name}
-                        </span>
+                        <Tippy content={<span>creator: {owner.name}</span>}>
+                          <img
+                            src={owner.image}
+                            alt="owner"
+                            layout="fill"
+                            className="dark:border-jacarta-600 hover:border-accent dark:hover:border-accent h-6 w-6 rounded-full border-2 border-white"
+                          />
+                        </Tippy>
                       </a>
-                    </Link>
-                    <span className="dark:border-jacarta-600 border-jacarta-100 flex items-center whitespace-nowrap rounded-md border py-1 px-2">
-                      <Tippy content={<span>ETH</span>}>
-                        <img
-                          src="/images/eth-icon.svg"
-                          alt=""
-                          className="w-3 h-3 mr-1"
-                        />
-                      </Tippy>
-
-                      <span className="text-green text-sm font-medium tracking-tight">
-                        {parseFloat(
-                    Number(
-                      ethers.utils.formatEther(
-                        price?.toString() || 0
-                      )
-                    ) || 0
-                  ).toFixed(3) || 0}{" "} ETH
-                      </span>
-                    </span>
-                  </div>
-                 
-
-                  <div className="mt-8 flex items-center justify-between">
-                    <button
-                      type="button"
-                      className="text-accent font-display text-sm font-semibold"
-                      onClick={() => dispatch(bidsModalShow())}
-                    >
-                      Place bid
-                    </button>
+                    </Link> */}
                   </div>
                 </div>
-              </article>
+              </figure>
+              <div className="mt-7 flex items-center justify-between">
+                <Link href={`/item/${tokenId?.toString()}`}>
+                  <a>
+                    <span className="font-display text-jacarta-700 hover:text-accent text-base dark:text-white">
+                      {name}
+                    </span>
+                  </a>
+                </Link>
+
+                {/* auction dropdown  */}
+              </div>
+              <div className="mt-2 text-sm">
+                <span className="dark:text-jacarta-200 text-jacarta-700 mr-1">
+                  {parseFloat(
+                    Number(ethers.utils.formatEther(price?.toString() || 0)) ||
+                      0
+                  ).toFixed(3) || 0}{" "}
+                  ETH
+                </span>
+              </div>
+
+              <div className="mt-8 flex items-center justify-between">
+                <button
+                  className="text-accent font-display text-sm font-semibold"
+                  onClick={() => dispatch(buyModalShow())}
+                >
+                  Buy now
+                </button>
+              </div>
+            </div>
+          </article>
             </SwiperSlide>
           );
         })}

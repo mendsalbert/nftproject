@@ -66,16 +66,16 @@ const Navbar = () => {
                 {/* <!-- Logo --> */}
                 <Link href="/">
                   <a className="shrink-0 lg:mr-14">
-                    {/* <img
-                      src="/images/logo.png"
+                    <img
+                      src="/images/logo1.png"
                       className="max-h-7 dark:hidden"
                       alt="Xhibiter | NFT Marketplace"
                     />
                     <img
-                      src="/images/logo_white.png"
+                      src="/images/logo1.png"
                       className="hidden max-h-7 dark:block"
                       alt="Xhibiter | NFT Marketplace"
-                    /> */}
+                    />
                     Logo
                   </a>
                 </Link>
@@ -280,18 +280,16 @@ const Navbar = () => {
               ) : (
                 <Link href="/">
                   <a className="shrink-0">
-                    {/* <img
-                      src="/images/logo.png"
-                      alt=""
-                      className="max-h-7 h-auto dark:hidden"
-                    />
-
-                    <img
-                      src="/images/logo_white.png"
-                      className="max-h-7 h-auto hidden dark:block"
+                  <img
+                      src="/images/logo1.png"
+                      className="max-h-16 dark:hidden"
                       alt="Xhibiter | NFT Marketplace"
-                    /> */}
-                        Logo
+                    />
+                    <img
+                      src="/images/logo1.png"
+                      className="hidden max-h-16 dark:block"
+                      alt="Xhibiter | NFT Marketplace"
+                    />
                   </a>
                 </Link>
               )}

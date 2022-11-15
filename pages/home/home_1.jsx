@@ -26,7 +26,7 @@ const Home_1 = () => {
 //   console.log(nfts);
   return (
     <main>
-      <Meta title="Home 1 || Xhibiter | NFT Marketplace Next.js Template" />
+      <Meta title="Universo" />
       <Hero />
       <Bids nft={nfts} />
       {/* <Top_collection /> */}

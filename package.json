@@ -69,10 +69,7 @@
   "directories": {
     "lib": "lib"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com-mendsalbert:mendsalbert/nftproject.git"
-  },
-  "author": "",
+  "repository": "git@github.com-mendsalbert:mendsalbert/nftproject.git",
+  "author": "mendsalbert <mendsalbert@gmail.com>",
   "description": ""
 }
