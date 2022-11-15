@@ -5,12 +5,12 @@
   <h3 align="center">Universo</h3>
 
   <p align="center">
-    Properties Management platform with Blockchain!
+    An online NFT platform
     <br />
-    <a href="https://github.com/kwakyebrilliant/Movers"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/mendsalbert/nftproject"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://moversv2.vercel.app/">View App</a>
+    <a href="https://universonft.netlify.app/">View App</a>
     
   </p>
 </div>
