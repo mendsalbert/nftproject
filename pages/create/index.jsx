@@ -112,6 +112,7 @@ const Create = () => {
     setname("");
     setFile("");
     notify("NFT Created Successfully");
+    alert('NFT created Successfully')
   };
 
   useEffect(() => {
